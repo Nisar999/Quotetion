@@ -14,7 +14,7 @@ services:
     runtime: docker                    # Use Docker to build & run
     dockerfilePath: ./backend/Dockerfile  # Path to the Dockerfile
     dockerContext: ./backend           # Build context directory
-    repo: https://github.com/YOUR_USERNAME/Quotetion  # ← Replace with your repo URL
+    repo: https://github.com/Nisar999/Quotetion
 
     # Health check — Render pings this to verify the service is alive
     healthCheckPath: /health
