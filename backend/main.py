@@ -108,6 +108,28 @@ app.add_middleware(
 
 
 @app.get(
+    "/",
+    tags=["System"],
+    summary="Welcome",
+    description="Root endpoint — shows API info and available endpoints.",
+)
+def root():
+    """Welcome endpoint with API overview."""
+    return {
+        "app": "Quotetion API",
+        "version": "1.0.0",
+        "message": "🌟 Welcome to Quotetion! A motivational quote generator API.",
+        "endpoints": {
+            "health": "/health",
+            "generate": "/generate (POST)",
+            "surprise": "/surprise",
+            "docs": "/docs",
+            "redoc": "/redoc",
+        },
+    }
+
+
+@app.get(
     "/health",
     response_model=HealthResponse,
     tags=["System"],
