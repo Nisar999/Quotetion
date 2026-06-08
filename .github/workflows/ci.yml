@@ -16,7 +16,7 @@ name: Quotetion CI
 # When should this workflow run?
 on:
   push:
-    branches: [main]        # Run when code is pushed to main
+    branches: [main, broken-demo]   # Run on main AND broken-demo branch
   pull_request:
     branches: [main]        # Run when a PR targets main
 
@@ -35,7 +35,7 @@ jobs:
     steps:
       # Step 1: Download the code
       - name: 📥 Checkout code
-        uses: actions/checkout@v4
+      uses: actions/checkout@v4       # ❌ BUG: wrong indentation (should be indented under '-')
 
       # Step 2: Set up Python
       - name: 🐍 Set up Python 3.11
