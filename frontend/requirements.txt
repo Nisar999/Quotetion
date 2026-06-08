@@ -1,0 +1,12 @@
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Quotetion Frontend Dependencies
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# UI framework
+streamlit==1.38.0
+
+# HTTP requests to backend
+requests==2.32.3
+
+# Environment variables
+python-dotenv==1.0.1

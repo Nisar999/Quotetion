@@ -1,0 +1,31 @@
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Quotetion — Render Blueprint (render.yaml)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# This file tells Render how to deploy the backend.
+# Render reads this file from your GitHub repo.
+#
+# Docs: https://render.com/docs/blueprint-spec
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+services:
+  # ── Backend Web Service ──
+  - type: web                          # Web service (publicly accessible)
+    name: quotetion-backend            # Service name on Render dashboard
+    runtime: docker                    # Use Docker to build & run
+    dockerfilePath: ./backend/Dockerfile  # Path to the Dockerfile
+    dockerContext: ./backend           # Build context directory
+    repo: https://github.com/YOUR_USERNAME/Quotetion  # ← Replace with your repo URL
+
+    # Health check — Render pings this to verify the service is alive
+    healthCheckPath: /health
+
+    # Environment variables
+    envVars:
+      - key: MOTIVATION_API_KEY
+        sync: false                    # Don't sync (set manually in dashboard)
+
+    # Auto-deploy when main branch is pushed
+    branch: main
+
+    # Free plan
+    plan: free

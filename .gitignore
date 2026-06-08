@@ -1,0 +1,41 @@
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Quotetion .gitignore
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
+htmlcov/
+
+# ── Virtual Environment ──
+venv/
+.venv/
+env/
+ENV/
+
+# ── Environment Variables ──
+.env
+
+# ── IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+
+# ── Docker ──
+.docker/
+
+# ── Streamlit ──
+.streamlit/secrets.toml

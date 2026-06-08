@@ -1,0 +1,45 @@
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Quotetion — Docker Compose
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Runs both backend and frontend with a single command:
+#   docker-compose up --build
+#
+# Stop with:
+#   docker-compose down
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+version: "3.8"
+
+services:
+  # ── Backend Service ──
+  # FastAPI running on port 8000
+  backend:
+    build:
+      context: ./backend                # Build from backend/ directory
+      dockerfile: Dockerfile            # Use backend/Dockerfile
+    container_name: quotetion-backend
+    ports:
+      - "8000:8000"                     # Map host:container port
+    environment:
+      - MOTIVATION_API_KEY=${MOTIVATION_API_KEY:-}  # Optional (empty if not set)
+    restart: unless-stopped             # Auto-restart on crash
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── Frontend Service ──
+  # Streamlit running on port 8501
+  frontend:
+    build:
+      context: ./frontend               # Build from frontend/ directory
+      dockerfile: Dockerfile            # Use frontend/Dockerfile
+    container_name: quotetion-frontend
+    ports:
+      - "8501:8501"                     # Map host:container port
+    environment:
+      - BACKEND_URL=http://backend:8000 # Points to backend service by name
+    depends_on:
+      - backend                         # Start backend first
+    restart: unless-stopped

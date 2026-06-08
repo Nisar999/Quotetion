@@ -1,0 +1,16 @@
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Quotetion Backend Dependencies
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Web framework
+fastapi==0.115.0
+
+# ASGI server
+uvicorn[standard]==0.30.6
+
+# Environment variables
+python-dotenv==1.0.1
+
+# ── Testing ──
+pytest==8.3.3
+httpx==0.27.2
