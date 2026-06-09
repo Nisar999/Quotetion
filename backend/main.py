@@ -20,6 +20,7 @@ from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 
 from models import SituationRequest, MotivationResponse, HealthResponse
 from data import get_by_situation, get_random
@@ -86,7 +87,38 @@ app = FastAPI(
         "name": "MIT",
     },
     lifespan=lifespan,
+    redoc_url=None,  # Disable default ReDoc (we serve a custom one below)
 )
+
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Custom ReDoc route
+# The default ReDoc CDN sometimes fails on free-tier hosting.
+# This route uses a reliable CDN (cdn.redoc.ly) instead.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+@app.get("/redoc", include_in_schema=False)
+def custom_redoc():
+    """Serve ReDoc with a reliable CDN."""
+    return HTMLResponse(
+        """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Quotetion API — ReDoc</title>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+            <style>
+                body { margin: 0; padding: 0; }
+            </style>
+        </head>
+        <body>
+            <redoc spec-url='/openapi.json'></redoc>
+            <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+        </body>
+        </html>
+        """
+    )
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # CORS Middleware
